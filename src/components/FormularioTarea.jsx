@@ -1,4 +1,4 @@
-import { Form, Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import ListaTareas from "./ListaTareas";
 import { useState } from "react";
@@ -8,9 +8,14 @@ const FormularioTarea = () => {
   const [tareas, setTareas] = useState([]);
 
   const handleSubmit = (e)=>{
-    e.preventDefault()
-    setTareas([...tareas, tarea])
-    setTarea('');
+    e.preventDefault();
+   setTareas([...tareas,tarea]);
+   setTarea('');
+  }
+
+  const borrarTarea = (nombreTarea)=>{
+    let copiaTareas = tareas.filter((itemTarea)=> itemTarea !== nombreTarea );
+    setTareas(copiaTareas);
   }
 
   return (
@@ -22,13 +27,15 @@ const FormularioTarea = () => {
             placeholder="Ingrese una tarea"
             onChange={(e) => setTarea(e.target.value)}
             value={tarea}
+            required
+            maxLength={75}
           />
           <Button variant="primary" type="submit">
-            <i className="bi bi-plus-circle fs-5"></i>
+          <i className="bi bi-plus-circle fs-5"></i>
           </Button>
         </Form.Group>
       </Form>
-      <ListaTareas tareas={tareas}/>
+      <ListaTareas tareas={tareas} borrarTarea={borrarTarea}></ListaTareas>
     </section>
   );
 };
